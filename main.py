@@ -5,7 +5,7 @@ import pandas as pd
 def extract_data(soup):
     data = []
 
-    # Extract Parliamentary Constituencies data
+    # Extracting the Parliamentary Constituencies data
     pc_data = soup.find('div', class_='pc-wrap')
     if pc_data:
         data.append({
@@ -14,7 +14,7 @@ def extract_data(soup):
             "Total Seats": pc_data.find('h1').text.strip()
         })
 
-    # Extract Assembly Constituencies data
+    # Extracting the Assembly Constituencies data
     ac_data = soup.find_all('div', class_=['olive-bg', 'pine-bg', 'gry-bg'])
     for item in ac_data:
         state = item.find('h2').text.strip()
@@ -25,7 +25,7 @@ def extract_data(soup):
             "Total Seats": total_seats
         })
 
-    # Extract additional states
+    # Extracting the additional states
     additional_states = soup.find_all('a', class_='btn-big')
     for state in additional_states:
         data.append({
@@ -42,15 +42,15 @@ if __name__ == "__main__":
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
     }
 
-    # Fetch webpage content
+    # To Fetch the webpage content
     response = requests.get(URL, headers=headers)
     soup = BeautifulSoup(response.content, 'html.parser')
 
-    # Extract data
+    # To Extract the data
     election_data = extract_data(soup)
 
-    # Create DataFrame
+    # To Create the DataFrame
     df = pd.DataFrame(election_data)
 
-    # Display the DataFrame
+    # To Display the DataFrame
     print(df)
